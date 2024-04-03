@@ -1,20 +1,20 @@
 <?php
 include 'libro.php';
 class Lectura {
-    private $objLibro;
+    private $libro;
     private $paginaActual;
 
     public function __construct(Libro $libro, $paginaActual) {
-        $this->objLibro = $libro;
+        $this->libro = $libro;
         $this->paginaActual = $paginaActual;
     }
 
     public function getLibro() {
-        return $this->objLibro;
+        return $this->libro;
     }
 
     public function setLibro(Libro $libro) {
-        $this->objLibro = $libro;
+        $this->libro = $libro;
     }
 
     public function getPaginaActual() {
@@ -43,7 +43,8 @@ class Lectura {
     }
 
     public function __toString() {
-        return "Libro: " . $this->objLibro->getTitulo() . "\n" .
+        return "Libro: " . $this->libro->getTitulo() . "\n" .
+               "Autor: " . $this->libro->getAutor()->getNombre() . " " . $this->libro->getAutor()->getApellido() . "\n" .
                "Página actual: " . $this->paginaActual;
     }
 }
