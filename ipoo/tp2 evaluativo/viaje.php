@@ -88,10 +88,11 @@ class Viaje
 
     public function __toString()
     {
-        $info = "Viaje Código: {$this->codigo}, Destino: {$this->destino}, Capacidad Máxima: {$this->capacidadMaxima}, Responsable: {$this->responsable}\nPasajeros:\n";
+        $info = "Viaje Código: " . $this->getCodigo() . ", Destino:". $this->getDestino(). ", Capacidad Máxima:". $this->getCapacidadMaxima().", Responsable: ". $this->getResponsable() . "\nPasajeros:\n";
         foreach ($this->pasajeros as $pasajero) {
             $info .= $pasajero . "\n";
         }
         return $info;
     }
-}
+ }
+

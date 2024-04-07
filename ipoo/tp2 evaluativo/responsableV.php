@@ -45,9 +45,14 @@ class ResponsableV {
         $this->apellido = $apellido;
     }
 
-    public function __toString() {
-        return "Número de Empleado: $this->numeroEmpleado, Número de Licencia: $this->numeroLicencia, Nombre: $this->nombre, Apellido: $this->apellido";
-    }
+ public function __toString()
+ {
+     return "Los datos del Responsable del Viaje son: " .
+     "\nNumero de empleado: " . $this->getNumeroEmpleado().
+     "\nEl numero de Licencia: ". $this->getNumeroLicencia().
+     "\nEl nombre: " . $this->getNombre().
+     "\nEl apellido: " . $this->getApellido();
+ }
 }
 
 
