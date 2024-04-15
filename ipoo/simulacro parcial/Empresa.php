@@ -89,12 +89,14 @@ class Empresa
         $ventaCompleta = 0;
         if (!$objCliente->estaDadoDeBaja()) {
             $venta = new Venta($cod+1, date("y,m,d"), $objCliente);
-            foreach ($colCodigosMoto as $codigoMoto) {
-                $moto = $this->retornarMoto($codigoMoto);
-                if ($moto->estaActiva()) { // || $moto = null
-                    $venta->incorporarMoto($moto);
+            for ($i = 0; $i < count($colCodigosMoto); $i++) {
+                $codigoProducto = $colCodigosMoto[$i];
+                $nuevoProducto = $this->retornarMoto($codigoProducto);
+                if ($nuevoProducto != null) {
+                    $venta->incorporarMoto($nuevoProducto);
                 }
             }
+        
             if ($venta->getPrecioFinal() > 0) {
                 $this->ventas[] = $venta;
                 $ventaCompleta = $venta->getPrecioFinal(); 

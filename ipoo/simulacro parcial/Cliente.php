@@ -51,7 +51,7 @@ public function __toString(){
     if ($this->dadoDeBaja == true) {
         $estado = "dado de baja";
     }
-    return "nombre: ". $this->nombre . "apellido: ". $this->apellido. "estado: ". $estado. "tipo doc: ". $this->tipoDocumento. "numero doc: ". $this->numeroDocumento;
+    return "nombre: ". $this->nombre . " apellido: ". $this->apellido. " estado: ". $estado. " tipo doc: ". $this->tipoDocumento. " numero doc: ". $this->numeroDocumento;
     
 }
  }

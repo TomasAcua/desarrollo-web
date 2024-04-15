@@ -72,7 +72,7 @@ class Moto
             $estado = "no disponible";
         
         }
-        return "Código:".$this->codigo. "Costo: ".$this->costo. "Año de fabricación: ". $this->anioFabricacion. "Descripción: ". $this->descripcion." Estado:". $estado;
+        return " Código:".$this->codigo. " Costo: ".$this->costo. " Año de fabricación: ". $this->anioFabricacion. " Descripción: ". $this->descripcion. " Estado:". $estado;
     }
 
    
