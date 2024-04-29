@@ -1,0 +1,12 @@
+.titulo{
+    font-family: Arial, Helvetica, sans-serif;
+    color: blue;
+    font-size: large;
+}
+.autor{
+    font-weight: bold;
+
+}
+p {
+    font-style: italic;
+}
