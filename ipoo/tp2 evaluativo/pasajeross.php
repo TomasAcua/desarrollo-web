@@ -1,11 +1,12 @@
 <?php
-class Pasajero {
+class Pasajeross {
     private $nombre;
     private $apellido;
     private $numeroDocumento;
     private $telefono;
+   
 
-    public function __construct($nombre, $apellido, $numeroDocumento, $telefono) {
+    public function __construct($nombre, $apellido, $numeroDocumento, $telefono,) {
         $this->nombre = $nombre;
         $this->apellido = $apellido;
         $this->numeroDocumento = $numeroDocumento;

@@ -1,22 +1,22 @@
 <?php
-
 class Viaje
 {
     private $codigo;
     private $destino;
     private $capacidadMaxima;
-    private $pasajeros; //preguntar si llega un array de antes
+    private $pasajeros = [];
     private $responsable;
+    private $costoViaje;
+    private $costoTotalPasajes = 0;
 
-    public function __construct($codigo, $destino, $capacidadMaxima, ResponsableV $responsable)
+    public function __construct($codigo, $destino, $capacidadMaxima, ResponsableV $responsable, $costoViaje)
     {
         $this->codigo = $codigo;
         $this->destino = $destino;
         $this->capacidadMaxima = $capacidadMaxima;
-        $this->pasajeros = array();
         $this->responsable = $responsable;
+        $this->costoViaje = $costoViaje;
     }
-
 
     public function getCodigo()
     {
@@ -55,21 +55,20 @@ class Viaje
 
     public function añadirPasajero($pasajero)
     {
-        $agregado = false;
-        if (count($this->pasajeros) < $this->capacidadMaxima) {
-            if (!$this->estaPasajero($pasajero)) {
-                $this->pasajeros[] = $pasajero;
-                $agregado = true;
-            }
+        $añadir = false;
+        if ($this->hayPasajesDisponibles() && !$this->estaPasajero($pasajero)) {
+            $this->pasajeros[] = $pasajero;
+            $this->actualizarCostoTotal($pasajero);
+            $añadir = true;
         }
-        return $agregado;
+        return $añadir;
     }
 
-    public function estaPasajero($pasajero)
+    private function estaPasajero($pasajero)
     {
         $esta = false;
         foreach ($this->pasajeros as $p) {
-            if ($p->getNumeroDocumento() == $pasajero->getNumeroDocumento()) {
+            if ($p->getNumeroTicket() == $pasajero->getNumeroTicket()) {
                 $esta = true;
             }
         }
@@ -86,6 +85,42 @@ class Viaje
         $this->responsable = $responsable;
     }
 
+    public function getCostoViaje()
+    {
+        return $this->costoViaje;
+    }
+
+    public function setCostoViaje($costoViaje)
+    {
+        $this->costoViaje = $costoViaje;
+    }
+
+    public function getCostoTotalPasajes()
+    {
+        return $this->costoTotalPasajes;
+    }
+
+    private function actualizarCostoTotal($pasajero)
+    {
+        $porcentajeIncremento = $pasajero->darPorcentajeIncremento() / 100;
+        $costoPasaje = $this->costoViaje * (1 + $porcentajeIncremento);
+        $this->costoTotalPasajes += $costoPasaje;
+    }
+
+    public function venderPasaje($objPasajero)
+    {
+        $vendido = false;
+        if ($this->añadirPasajero($objPasajero)) {
+            $vendido = $this->costoTotalPasajes;
+        }
+        return $vendido;
+    }
+
+    public function hayPasajesDisponibles()
+    {
+        return count($this->pasajeros) < $this->capacidadMaxima;
+    }
+
     public function __toString()
     {
         $info = "Viaje Código: " . $this->getCodigo() . ", Destino:". $this->getDestino(). ", Capacidad Máxima:". $this->getCapacidadMaxima().", Responsable: ". $this->getResponsable() . "\nPasajeros:\n";
@@ -94,5 +129,4 @@ class Viaje
         }
         return $info;
     }
- }
-
+}

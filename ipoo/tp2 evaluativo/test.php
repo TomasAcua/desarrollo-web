@@ -1,5 +1,5 @@
 <?php 
-include 'pasajero.php';
+include 'pasajeross.php';
 include 'responsableV.php';
 include 'viaje.php';
 
@@ -9,8 +9,8 @@ function solicitarDato($mensaje) {
 }
 
 $responsable = new ResponsableV(4444, 'kk5555', 'Tomas', 'Acuña');
-
-$viaje = new Viaje('01', 'Polonia', 30, $responsable);
+$costoViaje = 5000;
+$viaje = new Viaje('01', 'Polonia', 30, $responsable,$costoViaje);
 
 do {
     echo "\n1. Agregar Pasajero\n";
@@ -24,7 +24,7 @@ do {
             $apellido = solicitarDato("Apellido del pasajero: ");
             $documento = solicitarDato("Documento del pasajero: ");
             $telefono = solicitarDato("Teléfono del pasajero: ");
-            $pasajero = new Pasajero($nombre, $apellido, $documento, $telefono);
+            $pasajero = new Pasajeross($nombre, $apellido, $documento, $telefono);
             if($viaje->añadirPasajero($pasajero)){
                 echo "pasajero agregado. \n";
             } else {
