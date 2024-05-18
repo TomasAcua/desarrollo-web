@@ -1,0 +1,94 @@
+/* Estilo general para el cuerpo */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0; /* Fondo gris claro */
+}
+
+/* Contenedor principal */
+#content {
+    width: 80%;
+    margin: 0 auto; /* Centra el contenido */
+    background-color: #00f; /* Fondo azul */
+    border: 2px solid #f00; /* Borde rojo */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    overflow: hidden; /* Contener los elementos flotantes */
+    padding: 20px; /* Relleno para separar el contenido del borde */
+}
+
+/* Encabezado */
+#header {
+    background-color: #333; /* Fondo oscuro */
+    color: #fff; /* Texto blanco */
+    padding: 20px; /* Relleno */
+    text-align: center; /* Centrar texto */
+    margin-bottom: 20px; /* Espacio debajo del encabezado */
+}
+
+/* Navegación */
+#nav {
+    float: left; /* Flotar a la izquierda */
+    width: 20%; /* Ancho del 20% */
+    background-color: #f4f4f4; /* Fondo gris claro */
+    padding: 20px; /* Relleno */
+    box-sizing: border-box; /* Incluir relleno en el ancho */
+}
+
+#nav ul {
+    list-style-type: none; /* Sin viñetas */
+    padding: 0; /* Quitar relleno */
+}
+
+#nav ul li {
+    margin-bottom: 10px; /* Espacio inferior */
+}
+
+#nav ul li a {
+    color: #333; /* Color del texto */
+    text-decoration: none; /* Sin subrayado */
+}
+
+#nav ul li a:hover {
+    color: #007BFF; /* Color al pasar el ratón */
+}
+
+/* Contenido principal */
+#contentinner {
+    float: left; /* Flotar a la izquierda */
+    width: 75%; /* Ancho del 75% */
+    padding: 20px; /* Relleno */
+    box-sizing: border-box; /* Incluir relleno en el ancho */
+    background-color: #fff; /* Fondo blanco para el contenido */
+    border-left: 2px solid #f00; /* Borde rojo a la izquierda para separarlo del menú */
+}
+
+#contentinner p {
+    margin-bottom: 10px; /* Espacio inferior */
+}
+
+/* Limpiar flotantes */
+#clearfooter {
+    clear: both; /* Limpiar ambos lados */
+}
+
+/* Inserciones superiores e inferiores */
+#inserttop, #insertbottom {
+    height: 10px; /* Altura del área */
+    background-color: #fff; /* Fondo blanco */
+}
+
+/* Pie de página */
+#footer {
+    background-color: #333; /* Fondo oscuro */
+    color: #fff; /* Texto blanco */
+    text-align: center; /* Centrar texto */
+    padding: 10px; /* Relleno */
+    margin-top: 20px; /* Espacio superior */
+}
+
+#hidebordertop, #hideborderbottom {
+    background-color: #fff; /* Fondo blanco */
+    height: 10px; /* Altura */
+}
+
