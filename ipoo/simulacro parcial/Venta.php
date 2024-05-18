@@ -61,6 +61,26 @@ class Venta {
             }
         }
     }
+    public function retornarTotalVentaNacional() {
+        $total = 0;
+        foreach ($this->motos as $moto) {
+            if ($moto instanceof MotoNacional) {
+                $total += $moto->darPrecioVenta();
+            }
+        }
+        return $total;
+    }
+
+    public function retornarMotosImportadas() {
+        $motosImportadas = [];
+        foreach ($this->motos as $moto) {
+            if ($moto instanceof MotoImportada) {
+                $motosImportadas[] = $moto;
+            }
+        }
+        return $motosImportadas;
+    }
+
 
     public function __toString() {
         $infoMotosStr = "";

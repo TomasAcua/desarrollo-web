@@ -77,12 +77,13 @@ class Moto
 
    
     public function darPrecioVenta() {
+        $precio = -1;
         if ($this->activa) {
             $anioTranscurrido = 2024 - $this->anioFabricacion;
-            return $this->costo + $this->costo * ($anioTranscurrido * $this->porcentajeIncrementoAnual);
-        } else {
-            return -1; 
+            $precio = $this->costo + $this->costo * ($anioTranscurrido * $this->porcentajeIncrementoAnual);
+        }
+            return $precio; 
         }
     }
 
-}
+

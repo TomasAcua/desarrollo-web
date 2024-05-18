@@ -119,7 +119,25 @@ class Empresa
         }
         return $ventasCliente;
     }
+    public function informarSumaVentasNacionales()
+    {
+        $totalVentasNacionales = 0;
+        foreach ($this->ventas as $venta) {
+            $totalVentasNacionales += $venta->retornarTotalVentaNacional();
+        }
+        return $totalVentasNacionales;
+    }
 
+    public function informarVentasImportadas()
+    {
+        $ventasImportadas = [];
+        foreach ($this->ventas as $venta) {
+            if (count($venta->retornarMotosImportadas()) > 0) {
+                $ventasImportadas[] = $venta;
+            }
+        }
+        return $ventasImportadas;
+    }
 
     public function __toString()
     {
