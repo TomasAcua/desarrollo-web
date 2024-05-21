@@ -1,0 +1,132 @@
+/* Ejercicio 1:
+✔ Remueva el padding y el margin del elemento body.
+✔ La familia de fuentes debería ser: sans, "lucida grande", tahoma, verdana, sans-serif;
+✔ El tamaño de la fuente debería ser de 11px.
+✔ El fondo debería ser blanco.
+✔ El color del texto debería ser negro. */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family:  sans, "lucida grande", tahoma, verdana, sans-serif;
+    font-size: 11px;
+    background-color: white;
+    color: black;
+}
+
+/* Ejercicio 2:
+✔ #linkLists debería ser de un ancho de un 20% con respecto al navegador.
+✔ El resto de los elementos de la página deberían utilizar el 80% restante.
+✔ Mueva #linkLists al lado izquierdo de la página, a la misma altura de #intro.
+✔ h1 dentro de #pageHeader debería tener 10px de padding, un borde negro y de color
+de fondo el representado por #ddd.
+✔ h1 dentro de #pageHeader debería solaparse con h2 dentro de #pageHeader en 10px.
+✔ h2 dentro de #pageHeader debería tener un borde gris y 15px de padding. */
+
+
+#container {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: auto auto;
+}
+
+#intro {
+    grid-column: 2/3;
+}
+
+#supportingText {
+    grid-column: 2/3;
+}
+
+#linkList {
+    grid-column: 1/2;
+    grid-row: 1/3;
+}
+
+#pageHeader h1 {
+    margin: 0;
+    padding: 10px;
+    border: 1px solid black;
+    background-color: #ddd;
+    position: relative;
+    top: 10px;
+}
+
+#pageHeader h2 {
+    margin: 0;
+    padding: 15px;
+    border: 1px solid grey;
+    z-index: 1;
+}
+
+/* Ejercicio 3:
+✔ En el list de #lresources:
+• Eliminar los bullets.
+• El color de fondo debería ser #9cf.
+• Los links no deberían estar subrayados, deberían ser negrita y de color #036.
+• Cuanto hay un hover de un link, el fondo del color deberia cambiar a #036, y el
+color de texto #9cf.
+✔ En la lista de archivos, posicionar a “previous design” a la izquierda de “next design” y
+"view all designs" debajo de "next design".
+ */
+
+ #lresources ul {
+    list-style: none;
+    background-color: #9cf;
+}
+
+#lresources ul li a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #036;
+}
+
+#lresources ul li a:hover {
+    background-color: #036;
+    color: #9cf;
+}
+
+#larchives ul {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+}
+
+#larchives ul li:first-child, #larchives ul li:last-child {
+    grid-column: 2;
+}
+
+#larchives ul li:nth-child(2){
+    grid-row: 1;
+}
+
+/* Ejercicio 4:
+✔ Reemplace las bullets en #lselect con la imagen blue_bullet.gif
+✔ Reempace el texto de h1 en #pageHeader con la imagen css_zen_garden.gif
+• Posicione esta imagen de fondo a 10px desde el top top, y 10px desde el left del
+borde existente.
+✔ Usar la imagen zen_h2_back.gif como el background de #pageHeader h2.
+✔ La imagen del fondo debería estar posicionada contra el borde más alto del elemento.
+✔ El color de fondo debería ser #489AED.
+✔ Debería estar repetida horizontalmente. */
+
+#lselect ul {
+    list-style-image: url("./blue_bullet.gif");
+}
+
+#pageHeader h1 {
+    background-image: url("./css_zen_garden.gif");
+    background-size: 190px;
+    background-repeat: no-repeat;
+    background-position-x: 10px;
+    background-position-y: 10px;
+    overflow: hidden;
+    text-indent: -190px;
+}
+
+#pageHeader h2 {
+    background-image: url("./zen_h2_back.gif");
+    background-position-y: 0;
+    background-repeat: repeat-x;
+    background-color: #489AED;
+}
