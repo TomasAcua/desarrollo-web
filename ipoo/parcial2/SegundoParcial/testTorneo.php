@@ -44,11 +44,11 @@ echo "Resultado de ingresarPartido(objE5, objE11, '2024-05-23', 'Futbol'):\n";
 echo $torneo->ingresarPartido($objE5, $objE11, '2024-05-23', 'futbol') . "\n";
 echo "Cantidad de equipos en el torneo: " . count($torneo->getPartidos()) . "\n\n";
 
-echo "Resultado de ingresarPartido(objE11, objE11, '2024-05-23', 'basquetbol'):\n";
+echo "Resultado de ingresarPartido(objE11, objE11, '2024-05-23', 'basket'):\n";
 echo $torneo->ingresarPartido($objE11, $objE11, '2024-05-23', 'basket') . "\n";
 echo "Cantidad de equipos en el torneo: " . count($torneo->getPartidos()) . "\n\n";
 
-echo "Resultado de ingresarPartido(objE9, objE10, '2024-05-25', 'basquetbol'):\n";
+echo "Resultado de ingresarPartido(objE9, objE10, '2024-05-25', 'basket'):\n";
 echo $torneo->ingresarPartido($objE9, $objE10, '2024-05-25', 'basket') . "\n";
 echo "Cantidad de equipos en el torneo: " . count($torneo->getPartidos()) . "\n\n";
 
