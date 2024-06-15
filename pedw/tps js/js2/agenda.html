@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Agenda</title>
+  <script type="text/javascript" src="agenda.js"></script>
+</head>
+<body>
+  <h1>Agenda</h1>
+  <table id="agenda">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Dirección</th>
+        <th>Ciudad</th>
+        <th>Teléfono</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Las filas se llenarán dinámicamente -->
+    </tbody>
+  </table>
+  <form id="nuevoRegistroForm">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required>
+    <label for="direccion">Dirección:</label>
+    <input type="text" id="direccion" name="direccion" required>
+    <label for="ciudad">Ciudad:</label>
+    <input type="text" id="ciudad" name="ciudad" required>
+    <label for="telefono">Teléfono:</label>
+    <input type="text" id="telefono" name="telefono" required>
+    <button type="button" onclick="agregarRegistro()">Nuevo Registro</button>
+  </form>
+</body>
+</html>
