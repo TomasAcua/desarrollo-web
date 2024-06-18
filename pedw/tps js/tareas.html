@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lista de Tareas</title>
+  <script type="text/javascript" src="tareas.js"></script>
+  <link rel="stylesheet" type="text/css" href="estilos.css">
+</head>
+<body>
+  <h1>Lista de Tareas</h1>
+  <form id="formTareas" onsubmit="return agregarTarea();">
+    <input type="text" id="nuevaTarea" placeholder="Nueva Tarea">
+    <button type="submit">Agregar</button>
+  </form>
+  <ul id="listaTareas"></ul>
+</body>
+</html>
