@@ -1,260 +1,321 @@
 <?php
-
 require_once "Empresa.php";
 require_once "Viaje.php";
-require_once "ResponsableV.php";
 require_once "Pasajero.php";
-require_once "Persona.php";
+require_once "ResponsableV.php";
 
-class TestViaje
-{
+class TestViaje {
     private $conexion;
 
-    public function __construct($conexion)
-    {
+    public function __construct($conexion) {
         $this->conexion = $conexion;
     }
 
-    public function menu()
-    {
-        echo "===== Menú TestViaje =====\n";
-        echo "1. Ingresar información de empresa de viajes\n";
-        echo "2. Modificar información de empresa de viajes\n";
-        echo "3. Eliminar información de empresa de viajes\n";
-        echo "4. Buscar información de empresa de viajes\n";
-        echo "5. Ingresar información de un viaje\n";
-        echo "6. Modificar información de un viaje\n";
-        echo "7. Eliminar información de un viaje\n";
-        echo "8. Buscar información de un viaje\n";
-        echo "9. Salir\n";
-        echo "Seleccione una opción: ";
+    public function mostrarMenuPrincipal() {
+        do {
+            echo "===== Menú Principal =====\n";
+            echo "1. Gestionar Empresa\n";
+            echo "2. Gestionar Viaje\n";
+            echo "3. Gestionar Pasajero\n";
+            echo "4. Gestionar Responsable\n";
+            echo "0. Salir\n";
+            echo "Seleccione una opción: ";
+            $opcion = (int)trim(fgets(STDIN));
 
-        $opcion = (int)trim(fgets(STDIN));
+            switch ($opcion) {
+                case 1:
+                    $this->menuEmpresa();
+                    break;
+                case 2:
+                    $this->menuViaje();
+                    break;
+                case 3:
+                    $this->menuPasajero();
+                    break;
+                case 4:
+                    $this->menuResponsable();
+                    break;
+                case 0:
+                    echo "Saliendo del programa...\n";
+                    exit();
+                default:
+                    echo "Opción no válida\n";
+            }
+        } while ($opcion != 0);
+    }
+
+    private function menuEmpresa() {
+        echo "===== Gestión de Empresa =====\n";
+        echo "1. Crear Empresa\n";
+        echo "2. Actualizar Empresa\n";
+        echo "3. Eliminar Empresa\n";
+        echo "4. Buscar Empresa\n";
+        echo "0. Volver al Menú Principal\n";
+        echo "Seleccione una opción: ";
+        $opcion = trim(fgets(STDIN));
 
         switch ($opcion) {
             case 1:
-                $this->ingresarEmpresa();
+                echo "Nombre: ";
+                $nombre = trim(fgets(STDIN));
+                echo "Dirección: ";
+                $direccion = trim(fgets(STDIN));
+                $empresa = new Empresa($this->conexion, $nombre, $direccion);
+                $empresa->insertar();
                 break;
             case 2:
-                $this->modificarEmpresa();
+                echo "ID de la Empresa a actualizar: ";
+                $id = trim(fgets(STDIN));
+                $empresa = Empresa::buscar($this->conexion, $id);
+                if ($empresa) {
+                    echo "Nuevo Nombre: ";
+                    $nombre = trim(fgets(STDIN));
+                    echo "Nueva Dirección: ";
+                    $direccion = trim(fgets(STDIN));
+                    $empresa->setEnombre($nombre);
+                    $empresa->setEdireccion($direccion);
+                    $empresa->actualizar($id);
+                }
                 break;
             case 3:
-                $this->eliminarEmpresa();
+                echo "ID de la Empresa a eliminar: ";
+                $id = trim(fgets(STDIN));
+                $empresa = Empresa::buscar($this->conexion, $id);
+                if ($empresa) {
+                    $empresa->eliminar($id);
+                }
                 break;
             case 4:
-                $this->buscarEmpresa();
+                echo "ID de la Empresa a buscar: ";
+                $id = trim(fgets(STDIN));
+                $empresa = Empresa::buscar($this->conexion, $id);
+                if ($empresa) {
+                    echo "Nombre: " . $empresa->getEnombre() . "\n";
+                    echo "Dirección: " . $empresa->getEdireccion() . "\n";
+                }
                 break;
-            case 5:
-                $this->ingresarViaje();
-                break;
-            case 6:
-                $this->modificarViaje();
-                break;
-            case 7:
-                $this->eliminarViaje();
-                break;
-            case 8:
-                $this->buscarViaje();
-                break;
-            case 9:
-                echo "Saliendo del programa...\n";
-                break;
+            case 0:
+                return;
             default:
-                echo "Opción inválida. Inténtelo de nuevo.\n";
-                $this->menu();
+                echo "Opción no válida\n";
+        }
+    }
+
+    private function menuViaje() {
+        echo "===== Gestión de Viaje =====\n";
+        echo "1. Crear Viaje\n";
+        echo "2. Actualizar Viaje\n";
+        echo "3. Eliminar Viaje\n";
+        echo "4. Buscar Viaje\n";
+        echo "0. Volver al Menú Principal\n";
+        echo "Seleccione una opción: ";
+        $opcion = trim(fgets(STDIN));
+
+        switch ($opcion) {
+            case 1:
+                echo "Destino: ";
+                $destino = trim(fgets(STDIN));
+                echo "Cantidad Máxima de Pasajeros: ";
+                $cantMaxPasajeros = trim(fgets(STDIN));
+                echo "ID de la Empresa: ";
+                $idEmpresa = trim(fgets(STDIN));
+                echo "ID del Responsable: ";
+                $idResponsable = trim(fgets(STDIN));
+                echo "Importe: ";
+                $importe = trim(fgets(STDIN));
+                $viaje = new Viaje($this->conexion, $destino, $cantMaxPasajeros, $idEmpresa, $idResponsable, $importe);
+                $viaje->insertar();
                 break;
+            case 2:
+                echo "ID del Viaje a actualizar: ";
+                $id = trim(fgets(STDIN));
+                $viaje = Viaje::buscar($this->conexion, $id);
+                if ($viaje) {
+                    echo "Nuevo Destino: ";
+                    $destino = trim(fgets(STDIN));
+                    echo "Nueva Cantidad Máxima de Pasajeros: ";
+                    $cantMaxPasajeros = trim(fgets(STDIN));
+                    echo "Nuevo ID de la Empresa: ";
+                    $idEmpresa = trim(fgets(STDIN));
+                    echo "Nuevo ID del Responsable: ";
+                    $idResponsable = trim(fgets(STDIN));
+                    echo "Nuevo Importe: ";
+                    $importe = trim(fgets(STDIN));
+                    $viaje->setDestino($destino);
+                    $viaje->setCantMaxPasajeros($cantMaxPasajeros);
+                    $viaje->setIdEmpresa($idEmpresa);
+                    $viaje->setIdResponsable($idResponsable);
+                    $viaje->setImporte($importe);
+                    $viaje->actualizar($id);
+                }
+                break;
+            case 3:
+                echo "ID del Viaje a eliminar: ";
+                $id = trim(fgets(STDIN));
+                $viaje = Viaje::buscar($this->conexion, $id);
+                if ($viaje) {
+                    $viaje->eliminar($id);
+                }
+                break;
+            case 4:
+                echo "ID del Viaje a buscar: ";
+                $id = trim(fgets(STDIN));
+                $viaje = Viaje::buscar($this->conexion, $id);
+                if ($viaje) {
+                    echo "Destino: " . $viaje['destino'] . "\n";
+                    echo "Cantidad Máxima de Pasajeros: " . $viaje['cantMaxPasajeros'] . "\n";
+                    echo "ID de la Empresa: " . $viaje['idempresa'] . "\n";
+                    echo "ID del Responsable: " . $viaje['idresponsable'] . "\n";
+                    echo "Importe: " . $viaje['importe'] . "\n";
+                }
+                break;
+            case 0:
+                return;
+            default:
+                echo "Opción no válida\n";
         }
     }
 
-    public function ingresarEmpresa()
-    {
-        echo "Ingrese el nombre de la empresa: ";
-        $nombre = trim(fgets(STDIN));
-        echo "Ingrese la dirección de la empresa: ";
-        $direccion = trim(fgets(STDIN));
+    private function menuPasajero() {
+        echo "===== Gestión de Pasajero =====\n";
+        echo "1. Crear Pasajero\n";
+        echo "2. Actualizar Pasajero\n";
+        echo "3. Eliminar Pasajero\n";
+        echo "4. Buscar Pasajero\n";
+        echo "0. Volver al Menú Principal\n";
+        echo "Seleccione una opción: ";
+        $opcion = trim(fgets(STDIN));
 
-        // Validación de la entrada
-        if ($nombre && $direccion) {
-            $empresa = new Empresa($this->conexion, $nombre, $direccion);
-            $empresa->insertar();
-        } else {
-            echo "Nombre y dirección de empresa son obligatorios.\n";
+        switch ($opcion) {
+            case 1:
+                echo "Nombre: ";
+                $nombre = trim(fgets(STDIN));
+                echo "Apellido: ";
+                $apellido = trim(fgets(STDIN));
+                echo "Documento: ";
+                $documento = trim(fgets(STDIN));
+                echo "Teléfono: ";
+                $telefono = trim(fgets(STDIN));
+                echo "ID del Viaje: ";
+                $idViaje = trim(fgets(STDIN));
+                $pasajero = new Pasajero(null, $nombre, $apellido, $documento, $telefono, null, $idViaje);
+                $pasajero->insertar($this->conexion);
+                break;
+            case 2:
+                echo "ID del Pasajero a actualizar: ";
+                $idPasajero = trim(fgets(STDIN));
+                $pasajero = Pasajero::buscar($this->conexion, $idPasajero);
+                if ($pasajero) {
+                    echo "Nuevo Nombre: ";
+                    $nombre = trim(fgets(STDIN));
+                    echo "Nuevo Apellido: ";
+                    $apellido = trim(fgets(STDIN));
+                    echo "Nuevo Documento: ";
+                    $documento = trim(fgets(STDIN));
+                    echo "Nuevo Teléfono: ";
+                    $telefono = trim(fgets(STDIN));
+                    echo "Nuevo ID del Viaje: ";
+                    $idViaje = trim(fgets(STDIN));
+                    $pasajero->setNombre($nombre);
+                    $pasajero->setApellido($apellido);
+                    $pasajero->setDocumento($documento);
+                    $pasajero->setTelefono($telefono);
+                    $pasajero->setIdViaje($idViaje);
+                    $pasajero->actualizar($this->conexion);
+                }
+                break;
+            case 3:
+                echo "ID del Pasajero a eliminar: ";
+                $idPasajero = trim(fgets(STDIN));
+                $pasajero = Pasajero::buscar($this->conexion, $idPasajero);
+                if ($pasajero) {
+                    $pasajero->eliminar($this->conexion);
+                }
+                break;
+            case 4:
+                echo "ID del Pasajero a buscar: ";
+                $idPasajero = trim(fgets(STDIN));
+                $pasajero = Pasajero::buscar($this->conexion, $idPasajero);
+                if ($pasajero) {
+                    echo "Nombre: " . $pasajero['nombre'] . "\n";
+                    echo "Apellido: " . $pasajero['apellido'] . "\n";
+                    echo "Documento: " . $pasajero['documento'] . "\n";
+                    echo "Teléfono: " . $pasajero['telefono'] . "\n";
+                    echo "ID del Viaje: " . $pasajero['idviaje'] . "\n";
+                }
+                break;
+            case 0:
+                return;
+            default:
+                echo "Opción no válida\n";
         }
     }
 
-    public function modificarEmpresa()
-    {
-        echo "Ingrese el ID de la empresa a modificar: ";
-        $id = trim(fgets(STDIN));
+    private function menuResponsable() {
+        echo "===== Gestión de Responsable =====\n";
+        echo "1. Crear Responsable\n";
+        echo "2. Actualizar Responsable\n";
+        echo "3. Eliminar Responsable\n";
+        echo "4. Buscar Responsable\n";
+        echo "0. Volver al Menú Principal\n";
+        echo "Seleccione una opción: ";
+        $opcion = trim(fgets(STDIN));
 
-        // Validar si la empresa existe antes de modificarla
-        $empresa = Empresa::buscar($this->conexion, $id);
-        if (!$empresa) {
-            echo "La empresa con ID $id no existe.\n";
-            return;
+        switch ($opcion) {
+            case 1:
+                echo "Nombre: ";
+                $nombre = trim(fgets(STDIN));
+                echo "Apellido: ";
+                $apellido = trim(fgets(STDIN));
+                echo "Número de Licencia: ";
+                $numLicencia = trim(fgets(STDIN));
+                $responsable = new ResponsableV(null, $nombre, $apellido, $numLicencia, null);
+                $responsable->insertar($this->conexion);
+                break;
+            case 2:
+                echo "ID del Responsable a actualizar: ";
+                $idResponsable = trim(fgets(STDIN));
+                $responsable = ResponsableV::buscar($this->conexion, $idResponsable);
+                if ($responsable) {
+                    echo "Nuevo Nombre: ";
+                    $nombre = trim(fgets(STDIN));
+                    echo "Nuevo Apellido: ";
+                    $apellido = trim(fgets(STDIN));
+                    echo "Nuevo Número de Licencia: ";
+                    $numLicencia = trim(fgets(STDIN));
+                    $responsable->setNombre($nombre);
+                    $responsable->setApellido($apellido);
+                    $responsable->setNumeroLicencia($numLicencia);
+                    $responsable->actualizar($this->conexion);
+                }
+                break;
+            case 3:
+                echo "ID del Responsable a eliminar: ";
+                $idResponsable = trim(fgets(STDIN));
+                $responsable = ResponsableV::buscar($this->conexion, $idResponsable);
+                if ($responsable) {
+                    $responsable->eliminar($this->conexion);
+                }
+                break;
+            case 4:
+                echo "ID del Responsable a buscar: ";
+                $idResponsable = trim(fgets(STDIN));
+                $responsable = ResponsableV::buscar($this->conexion, $idResponsable);
+                if ($responsable) {
+                    echo "Nombre: " . $responsable['nombre'] . "\n";
+                    echo "Apellido: " . $responsable['apellido'] . "\n";
+                    echo "Número de Licencia: " . $responsable['numLicencia'] . "\n";
+                }
+                break;
+            case 0:
+                return;
+            default:
+                echo "Opción no válida\n";
         }
-
-        echo "Ingrese el nuevo nombre de la empresa: ";
-        $nombre = trim(fgets(STDIN));
-        echo "Ingrese la nueva dirección de la empresa: ";
-        $direccion = trim(fgets(STDIN));
-
-        // Validación de la entrada
-        if ($nombre && $direccion) {
-            $empresa->setNombre($nombre);
-            $empresa->setDireccion($direccion);
-
-            $empresa->actualizar($id);
-        } else {
-            echo "Nombre y dirección de empresa son obligatorios.\n";
-        }
-    }
-
-    public function eliminarEmpresa()
-    {
-        echo "Ingrese el ID de la empresa a eliminar: ";
-        $id = trim(fgets(STDIN));
-
-        // Validar si la empresa existe antes de eliminarla
-        $empresa = Empresa::buscar($this->conexion, $id);
-        if (!$empresa) {
-            echo "La empresa con ID $id no existe.\n";
-            return;
-        }
-
-        $empresa->eliminar($id);
-    }
-    public function buscarEmpresa()
-{
-    echo "Ingrese el ID de la empresa a buscar: ";
-    $id = trim(fgets(STDIN));
-
-    $empresa = Empresa::buscar($this->conexion, $id);
-    if ($empresa) {
-        echo "Información de la empresa:\n";
-        echo "ID: " . $id . "\n";
-        echo "Nombre: " . $empresa->getNombre() . "\n";
-        echo "Dirección: " . $empresa->getDireccion() . "\n";
-    } else {
-        echo "No se encontró ninguna empresa con ese ID.\n";
     }
 }
-    
 
-    public function ingresarViaje()
-    {
-        echo "Ingrese el destino del viaje: ";
-        $destino = trim(fgets(STDIN));
-        echo "Ingrese la cantidad máxima de pasajeros: ";
-        $cantMaxPasajeros = trim(fgets(STDIN));
-        echo "Ingrese el ID de la empresa: ";
-        $idEmpresa = trim(fgets(STDIN));
-        echo "Ingrese el número de empleado: ";
-        $numEmpleado = trim(fgets(STDIN));
-        echo "Ingrese el importe del viaje: ";
-        $importe = trim(fgets(STDIN));
-
-        // Validación de la entrada
-        if ($destino && $cantMaxPasajeros && $idEmpresa && $numEmpleado && $importe) {
-            $viaje = new Viaje($this->conexion, $destino, $cantMaxPasajeros, $idEmpresa, $numEmpleado, $importe);
-            $viaje->insertar();
-        } else {
-            echo "Todos los campos son obligatorios.\n";
-        }
-    }
-
-    public function modificarViaje()
-    {
-        echo "Ingrese el ID del viaje a modificar: ";
-        $id = trim(fgets(STDIN));
-
-        // Validar si el viaje existe antes de modificarlo
-        $viaje = Viaje::buscar($this->conexion, $id);
-        if (!$viaje) {
-            echo "El viaje con ID $id no existe.\n";
-            return;
-        }
-
-        echo "Ingrese el nuevo destino del viaje: ";
-        $destino = trim(fgets(STDIN));
-        echo "Ingrese la nueva cantidad máxima de pasajeros: ";
-        $cantMaxPasajeros = trim(fgets(STDIN));
-        echo "Ingrese el nuevo ID de la empresa: ";
-        $idEmpresa = trim(fgets(STDIN));
-        echo "Ingrese el nuevo número de empleado: ";
-        $numEmpleado = trim(fgets(STDIN));
-        echo "Ingrese el nuevo importe del viaje: ";
-        $importe = trim(fgets(STDIN));
-
-        // Validación de la entrada
-        if ($destino && $cantMaxPasajeros && $idEmpresa && $numEmpleado && $importe) {
-            $viaje->setDestino($destino);
-            $viaje->setCantMaxPasajeros($cantMaxPasajeros);
-            $viaje->setIdEmpresa($idEmpresa);
-            $viaje->setNumEmpleado($numEmpleado);
-            $viaje->setImporte($importe);
-
-            $viaje->actualizar($id);
-        } else {
-            echo "Todos los campos son obligatorios.\n";
-        }
-    }
-
-    public function eliminarViaje()
-    {
-        echo "Ingrese el ID del viaje a eliminar: ";
-        $id = trim(fgets(STDIN));
-
-        // Validar si el viaje existe antes de eliminarlo
-        $viaje = Viaje::buscar($this->conexion, $id);
-        if (!$viaje) {
-            echo "El viaje con ID $id no existe.\n";
-            return;
-        }
-
-        $viaje->eliminar($id);
-    }
-    public function buscarViaje()
-    {
-        echo "Ingrese el ID del viaje a buscar: ";
-        $id = trim(fgets(STDIN));
-
-        $viaje = Viaje::buscar($this->conexion, $id);
-        if ($viaje) {
-            echo "Información del viaje:\n";
-            echo "ID: " . $viaje['idviaje'] . "\n";
-            echo "Destino: " . $viaje['vdestino'] . "\n";
-            echo "Cant. Máx. Pasajeros: " . $viaje['vcantmaxpasajeros'] . "\n";
-            echo "ID Empresa: " . $viaje['idempresa'] . "\n";
-            echo "Número Empleado: " . $viaje['rnumeroempleado'] . "\n";
-            echo "Importe: " . $viaje['vimporte'] . "\n";
-        } else {
-            echo "No se encontró ningún viaje con ese ID.\n";
-        }
-    }
-}
-
-// Ejemplo de uso
+// Uso de la clase TestViaje
 $conexion = new mysqli("localhost", "root", "", "bdviajes");
 $testViaje = new TestViaje($conexion);
-// Creamos algunos empleados
-$empleado1 = new ResponsableV("Juan", "Pérez", 1001, 123456);
-$empleado2 = new ResponsableV("María", "García", 1002, 789012);
-$empleado3 = new ResponsableV("Carlos", "López", 1003, 345678);
-
-// Insertamos los empleados en la base de datos
-$empleado1->insertar($conexion);
-$empleado2->insertar($conexion);
-$empleado3->insertar($conexion);
-
-// Creamos algunos pasajeros
-$pasajero1 = new Pasajero($conexion, "Laura", "Gómez", "123ABC", "555-1234");
-$pasajero2 = new Pasajero($conexion, "Pedro", "Martínez", "456DEF", "555-5678");
-$pasajero3 = new Pasajero($conexion, "Ana", "Rodríguez", "789GHI", "555-9012");
-
-// Insertamos los pasajeros en la base de datos
-$pasajero1->insertar($conexion);
-$pasajero2->insertar($conexion);
-$pasajero3->insertar($conexion);
-
-$testViaje->menu();
+$testViaje->mostrarMenuPrincipal();

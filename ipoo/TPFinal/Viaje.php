@@ -59,7 +59,7 @@ class Viaje {
 
     // Insertar Viaje
     public function insertar() {
-        $sql = "INSERT INTO viaje (vdestino, vcantmaxpasajeros, idempresa, rnumeroempleado, vimporte) VALUES ('$this->destino', '$this->cant_max_pasajeros', '$this->id_empresa', '$this->num_empleado', '$this->importe')";
+        $sql = "INSERT INTO viaje (destino, cantMaxPasajeros, idempresa, idresponsable, importe) VALUES ('$this->destino', '$this->cant_max_pasajeros', '$this->id_empresa', '$this->num_empleado', '$this->importe')";
         if ($this->conexion->query($sql) === TRUE) {
             echo "Nuevo viaje creado exitosamente";
         } else {

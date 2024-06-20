@@ -11,19 +11,19 @@ class Empresa {
     }
 
     // Getters and Setters
-    public function getNombre() {
+    public function getEnombre() {
         return $this->nombre;
     }
 
-    public function setNombre($nombre) {
+    public function setEnombre($nombre) {
         $this->nombre = $nombre;
     }
 
-    public function getDireccion() {
+    public function getEdireccion() {
         return $this->direccion;
     }
 
-    public function setDireccion($direccion) {
+    public function setEdireccion($direccion) {
         $this->direccion = $direccion;
     }
 
@@ -62,8 +62,8 @@ class Empresa {
         if ($resultado->num_rows > 0) {
             $fila = $resultado->fetch_assoc();
             $empresa = new Empresa($conexion);
-            $empresa->setNombre($fila['enombre']);
-            $empresa->setDireccion($fila['edireccion']);
+            $empresa->setEnombre($fila['enombre']);
+            $empresa->setEdireccion($fila['edireccion']);
             return $empresa;
         } else {
             echo "No se encontraron resultados";

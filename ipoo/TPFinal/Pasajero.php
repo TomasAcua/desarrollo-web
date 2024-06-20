@@ -3,37 +3,47 @@
 require_once "Persona.php";
 
 class Pasajero extends Persona {
-    private $numeroPasajero;
+    private $idPasajero;
+    private $idViaje;
 
-    public function __construct($nombre, $apellido, $documento, $telefono, $numeroPasajero) {
-        parent::__construct($nombre, $apellido, $documento, $telefono);
-        $this->numeroPasajero = $numeroPasajero;
+    public function __construct($id = null, $nombre = null, $apellido = null, $documento = null, $telefono = null, $idPasajero = null, $idViaje = null) {
+        parent::__construct($id, $nombre, $apellido, $documento, $telefono);
+        $this->idPasajero = $idPasajero;
+        $this->idViaje = $idViaje;
     }
 
-    // Getter y setter para el número de pasajero
-    public function getNumeroPasajero() {
-        return $this->numeroPasajero;
+    // Getters y setters
+    public function getIdPasajero() {
+        return $this->idPasajero;
     }
 
-    public function setNumeroPasajero($numeroPasajero) {
-        $this->numeroPasajero = $numeroPasajero;
+    public function setIdPasajero($idPasajero) {
+        $this->idPasajero = $idPasajero;
     }
 
-    // Método para insertar un pasajero en la base de datos
-    //modificar id viaje
-    
+    public function getIdViaje() {
+        return $this->idViaje;
+    }
+
+    public function setIdViaje($idViaje) {
+        $this->idViaje = $idViaje;
+    }
+
+    // Métodos CRUD para la clase Pasajero
     public function insertar($conexion) {
-        $sql = "INSERT INTO pasajero (idpasajero, pdocumento, pnombre, papellido, ptelefono, pnumeropasajero) VALUES ('$this->numeroPasajero','$this->documento', '$this->nombre', '$this->apellido', '$this->telefono', '$this->numeroPasajero')";
+        parent::insertar($conexion);  // Insertar la persona primero
+        $sql = "INSERT INTO pasajero (idpersona, idviaje) VALUES ('$this->id', '$this->idViaje')";
         if ($conexion->query($sql) === TRUE) {
+            $this->idPasajero = $conexion->insert_id;
             echo "Nuevo registro de pasajero creado exitosamente";
         } else {
             echo "Error al crear un nuevo registro de pasajero: " . $conexion->error;
         }
     }
 
-    // Método para actualizar un pasajero en la base de datos
-    public function actualizar($conexion, $documento) {
-        $sql = "UPDATE pasajero SET pnombre='$this->nombre', papellido='$this->apellido', ptelefono='$this->telefono', pnumeropasajero='$this->numeroPasajero' WHERE pdocumento='$documento'";
+    public function actualizar($conexion) {
+        parent::actualizar($conexion);  // Actualizar la persona primero
+        $sql = "UPDATE pasajero SET idviaje='$this->idViaje' WHERE idpasajero='$this->idPasajero'";
         if ($conexion->query($sql) === TRUE) {
             echo "Registro de pasajero actualizado exitosamente";
         } else {
@@ -41,26 +51,27 @@ class Pasajero extends Persona {
         }
     }
 
-    // Método para eliminar un pasajero de la base de datos
-    public function eliminar($conexion, $documento) {
-        $sql = "DELETE FROM pasajero WHERE pdocumento='$documento'";
+    public function eliminar($conexion) {
+        $sql = "DELETE FROM pasajero WHERE idpasajero='$this->idPasajero'";
         if ($conexion->query($sql) === TRUE) {
+            parent::eliminar($conexion);  // Eliminar la persona después
             echo "Registro de pasajero eliminado exitosamente";
         } else {
             echo "Error al eliminar el registro de pasajero: " . $conexion->error;
         }
     }
 
-    // Método para buscar un pasajero en la base de datos
-    public static function buscar($conexion, $documento) {
-        $sql = "SELECT * FROM pasajero WHERE pdocumento='$documento'";
+    public static function buscar($conexion, $idPasajero) {
+        $sql = "SELECT * FROM pasajero WHERE idpasajero='$idPasajero'";
         $resultado = $conexion->query($sql);
         if ($resultado->num_rows > 0) {
-            return $resultado->fetch_assoc();
+            $fila = $resultado->fetch_assoc();
+            $persona = Persona::buscar($conexion, $fila['idpersona']);
+            $pasajero = new Pasajero($persona->getId(), $persona->getNombre(), $persona->getApellido(), $persona->getDocumento(), $persona->getTelefono(), $fila['idpasajero'], $fila['idviaje']);
+            return $pasajero;
         } else {
             echo "No se encontraron resultados para la búsqueda de pasajero";
             return null;
         }
     }
 }
-?>
