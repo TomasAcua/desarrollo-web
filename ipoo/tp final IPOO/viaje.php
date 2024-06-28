@@ -141,17 +141,17 @@ class Viaje
         $resp = false;
         if ($baseDatos->iniciar()) {
             if ($baseDatos->ejecutar($consulta)) {
-                if ($row2 = $baseDatos->registro($consulta)) {
+                if ($registro = $baseDatos->registro($consulta)) {
                     $objEmpresa = new empresa();
-                    $objEmpresa->buscar($row2['idempresa']);
+                    $objEmpresa->buscar($registro['idempresa']);
                     $objResponsable = new responsable();
-                    $objResponsable->buscar($row2['rnumeroempleado']);
+                    $objResponsable->buscar($registro['rnumeroempleado']);
                     $this->setIdviaje($id);
-                    $this->setVdestino($row2['vdestino']);
-                    $this->setVcantmaxpasajeros($row2['vcantmaxpasajeros']);
+                    $this->setVdestino($registro['vdestino']);
+                    $this->setVcantmaxpasajeros($registro['vcantmaxpasajeros']);
                     $this->setObjEmpresa($objEmpresa);
                     $this->setObjResponsable($objResponsable);
-                    $this->setVimporte($row2['vimporte']);
+                    $this->setVimporte($registro['vimporte']);
                     $resp = true;
                 }
             } else {
@@ -271,6 +271,7 @@ class Viaje
     }
 
     //eliminar pasajero por id de viaje
+    // tendria que eliminarlo el propio objpasajero
     public function eliminarPasajerosPorViaje($idViaje)
     {
         $base = new BaseDatos();
@@ -280,7 +281,7 @@ class Viaje
             FROM pasajero
             INNER JOIN persona ON pasajero.pnroDoc = persona.pdocumento
             WHERE pasajero.idviaje = " . $idViaje;
-            if ($base->Ejecutar($consultaBorraPasajeros)) {
+            if ($base->ejecutar($consultaBorraPasajeros)) {
                 $resp = true;
             } else {
                 $this->setMensajeError($base->getError());
